@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 import Search from './search';
 import Portfolio from './portfolio';
@@ -18,11 +19,17 @@ class PortfolioContainer extends Component {
   }
 
   handleChange = (e) => {
-    this.setState({
-      name: e.target.value
-    })
+    // this.setState({
+    //   name: e.target.value
+    // })
 
-    console.log(this.state.name)
+    axios.post('http://localhost:3000/search', {
+      search: e.target.value
+    }).then((data) => {
+      console.log(data)
+    }).catch((data) => {
+      console.log(data)
+    })
   }
 
   render(){
