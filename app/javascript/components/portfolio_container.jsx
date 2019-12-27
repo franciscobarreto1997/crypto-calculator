@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+import Search from './search';
+import Portfolio from './portfolio';
+import Calculate from './calculate';
+
 class PortfolioContainer extends Component {
   constructor(props){
     super(props)
@@ -13,9 +17,20 @@ class PortfolioContainer extends Component {
     }
   }
 
+  handleChange = (e) => {
+    this.setState({
+      name: e.target.value
+    })
+
+    console.log(this.state.name)
+  }
+
   render(){
     return(
-      <div>Hellooo Boomer!</div>
+      <div>
+        <Search handleChange={this.handleChange} />
+        <Calculate />
+      </div>
     )
   }
 }
