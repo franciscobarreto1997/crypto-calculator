@@ -11,8 +11,8 @@ class PortfolioContainer extends Component {
 
     this.state = {
       portfolio: [],
-      search_results: [],
-      active_currency: null,
+      searchResults: [],
+      activeCurrency: null,
       amount: ''
     }
   }
@@ -22,7 +22,7 @@ class PortfolioContainer extends Component {
       search: e.target.value
     }).then((data) => {
       this.setState({
-        search_results: [...data.data.currencies]
+        searchResults: [...data.data.currencies]
       })
     }).catch((data) => {
       console.log(data)
@@ -32,27 +32,49 @@ class PortfolioContainer extends Component {
   handleClick = (e) => {
     e.preventDefault()
     const id = e.target.getAttribute('data-id');
-    const activeCurrency = this.state.search_results.filter(item => item.id == parseInt(id))
+    const activeCurrency = this.state.searchResults.filter(item => item.id == parseInt(id))
     this.setState({
-      active_currency: activeCurrency[0],
+      activeCurrency: activeCurrency[0],
       searchResults: []
     })
   }
 
   handleSubmit = (e) => {
+    e.preventDefault()
 
+    let currency = this.state.activeCurrency
+    let amount = this.state.amount
+
+    axios.post('http://localhost:3000/calculate', {
+      id: currency.id,
+      amount: amount
+    }).then((data) => {
+      this.setState({
+        amount: '',
+        activeCurrency: null,
+        portfolio: [...this.state.portfolio, data.data]
+      })
+    }).catch((data) => {
+      console.log(data)
+    })
+  }
+
+  handleAmount = (e) => {
+    this.setState({
+      amount: e.target.value
+    })
   }
 
   render(){
 
-    const searchOrCalculate = this.state.active_currency ?
-    <Calculate handleChange={this.handleChange}
+    const searchOrCalculate = this.state.activeCurrency ?
+    <Calculate handleChange={this.handleAmount}
                handleSubmit={this.handleSubmit}
-               activeCurrency={this.state.active_currency}
+               activeCurrency={this.state.activeCurrency}
                amount={this.state.amount} />
                :
     <Search handleClick={this.handleClick}
-            searchResults={this.state.search_results}
+            searchResults={this.state.searchResults}
             handleChange={this.handleChange} />
 
     return(

@@ -1,7 +1,5 @@
 class CurrenciesController < ApplicationController
 
-  before_action :find_currency, only: [:calculate]
-
   def index
   end
 
@@ -21,7 +19,7 @@ class CurrenciesController < ApplicationController
 
   private
 
-  def find_currency
+  def currency
     @currency ||= Currency.find(params[:id])
   end
 end
