@@ -17,8 +17,7 @@ class Calculate extends Component {
              className="field" onChange={this.props.handleChange}/>
           </div>
           <div className="form-group">
-            <input type="submit" className="calculate-btn" value="Calculate my total">
-            </input>
+            <input type="submit" className="calculate-btn" value="Calculate my total" />
           </div>
         </form>
       </div>

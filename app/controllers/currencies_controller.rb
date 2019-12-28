@@ -12,7 +12,7 @@ class CurrenciesController < ApplicationController
     render json: {
       currency: currency,
       current_price: currency.current_price,
-      amout: params[:amout],
+      amount: params[:amount],
       value: currency.calculate_value(params[:amount])
     }
   end
