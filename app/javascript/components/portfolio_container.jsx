@@ -10,7 +10,6 @@ class PortfolioContainer extends Component {
     super(props)
 
     this.state = {
-      name: '',
       portfolio: [],
       search_results: [],
       active_currency: null,
@@ -30,11 +29,35 @@ class PortfolioContainer extends Component {
     })
   }
 
+  handleClick = (e) => {
+    e.preventDefault()
+    const id = e.target.getAttribute('data-id');
+    const activeCurrency = this.state.search_results.filter(item => item.id == parseInt(id))
+    this.setState({
+      active_currency: activeCurrency[0],
+      searchResults: []
+    })
+  }
+
+  handleSubmit = (e) => {
+
+  }
+
   render(){
+
+    const searchOrCalculate = this.state.active_currency ?
+    <Calculate handleChange={this.handleChange}
+               handleSubmit={this.handleSubmit}
+               activeCurrency={this.state.active_currency}
+               amount={this.state.amount} />
+               :
+    <Search handleClick={this.handleClick}
+            searchResults={this.state.search_results}
+            handleChange={this.handleChange} />
+
     return(
       <div>
-        <Search searchResults={this.state.search_results} handleChange={this.handleChange} />
-        <Calculate />
+        {searchOrCalculate}
       </div>
     )
   }
