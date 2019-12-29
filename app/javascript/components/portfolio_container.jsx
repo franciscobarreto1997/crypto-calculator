@@ -17,6 +17,15 @@ class PortfolioContainer extends Component {
     }
   }
 
+  componentDidMount() {
+    axios.get('http://localhost:3000/fetch_my_currencies').then((data) => {
+      console.log(data.data)
+      this.setState({
+        portfolio: [...this.state.portfolio, data.data]
+      })
+    })
+  }
+
   handleChange = (e) => {
     const input = e.target.value
     axios.post('http://localhost:3000/search', {

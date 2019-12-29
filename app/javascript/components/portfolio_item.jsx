@@ -6,6 +6,7 @@ class PortfolioItem extends Component {
 
   }
   render(){
+    console.log(this.props.item)
     return(
       <div>
         <div className="row">
